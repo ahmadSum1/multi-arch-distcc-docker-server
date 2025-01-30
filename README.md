@@ -4,11 +4,11 @@ A Dockerized `distcc` server to distribute C/C++ compilation across a network. I
 
 ## Features
 
-- 🐳 Dockerized `distccd` server (Ubuntu 24.04 base)
-- 🔒 IP-based access control
-- 🔄 Automatic compiler version alignment
-- 📊 Logging integration
-- 💻 Client configuration templates
+- 🐳 Dockerized `distccd` server (Ubuntu 24.04 base) ✅
+- 🔒 IP-based access control ❗
+- 🔄 Automatic compiler version alignment ✅
+- 📊 Logging integration ✅
+- 💻 Client configuration templates ✅
 
 ## Prerequisites
 
