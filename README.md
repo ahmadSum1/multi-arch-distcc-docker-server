@@ -1,6 +1,6 @@
 # Multi-arch `distcc` Docker Server Setup
 
-A Dockerized `distcc` server to distribute C/C++ compilation across a network. It can support multiple architectures. Designed for use in a VPN environment.
+A Dockerized `distcc` server to distribute C/C++ compilation across a network. It can support multiple architectures, essentially cross-compiling. Designed for use in a VPN environment.
 
 ## Features
 
