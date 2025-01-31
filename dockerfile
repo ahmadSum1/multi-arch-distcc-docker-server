@@ -23,6 +23,16 @@ RUN apt-get update && \
         distcc gcc g++ && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+  
+ARG GCC_VERSION=11 # Default GCC version
+
+# Install GCC 11 and set it as the default
+RUN apt-get update && \
+    apt-get install -y distcc gcc-${GCC_VERSION} g++-${GCC_VERSION} && \
+    update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-${GCC_VERSION} 100 \
+    --slave /usr/bin/g++ g++ /usr/bin/g++-${GCC_VERSION} && \
+    update-alternatives --set gcc /usr/bin/gcc-${GCC_VERSION} && \
+    apt-get clean
 
 # Configure distcc to allow your VPN/subnet
 # CMD ["distccd", "--daemon", "--no-detach", "--allow", "172.22.0.0/16", "--allow", "10.1.8.3", "--log-stderr", "--log-level=notice"]
