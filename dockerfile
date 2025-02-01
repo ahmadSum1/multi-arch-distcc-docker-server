@@ -34,6 +34,9 @@ RUN apt-get update && \
     update-alternatives --set gcc /usr/bin/gcc-${GCC_VERSION} && \
     apt-get clean
 
+# Create symbolic link for cc to gcc-11
+RUN ln -s /usr/lib/distcc/gcc-11 /usr/lib/distcc/cc
+
 # Configure distcc to allow your VPN/subnet
 # CMD ["distccd", "--daemon", "--no-detach", "--allow", "172.22.0.0/16", "--allow", "10.1.8.3", "--log-stderr", "--log-level=notice"]
 CMD ["distccd", "--no-detach", "--allow-private", "--log-stderr", "--log-level=notice"]
