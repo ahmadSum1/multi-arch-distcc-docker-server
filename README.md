@@ -10,6 +10,19 @@ A Dockerized `distcc` server to distribute C/C++ compilation across a network. I
 - 📊 Logging integration ✅
 - 💻 Client configuration templates ✅
 
+## Tested
+|Client Architecture| gcc   |  Status  |
+|-------------------|-------|----------|
+| `x86_64`          | `11`  | ✅       |
+| `x86_64`          | `12`  | 🤷‍♂️       |
+| `x86_64`          | `13`  | ✅       |
+| `aarch64`(arm)    | `11`  | 🤷‍♂️       |
+| `aarch64`(arm)    | `12`  | 🤷‍♂️       |
+| `aarch64`(arm)    | `13`  | 🤷‍♂️       |
+| `riscv64`         | `11`  | ✅       |
+| `riscv64`         | `12`  | 🤷‍♂️       |
+| `riscv64`         | `13`  | ✅       |
+
 ## Prerequisites
 
 - Docker installed
@@ -36,22 +49,27 @@ docker run -d \
 ### Environment Variables (`~/.bashrc`):
 ```bash
 # distcc (example)
-export DISTCC_HOSTS="172.22.220.20/13" #{server IP}/{max number of parallel jobs}
-export DISTCC_POTENTIAL_HOSTS="172.22.220.20" 
-# ccache
-export PATH="/usr/lib/ccache:$PATH"
-export CCACHE_PREFIX="distcc"
+export DISTCC_HOSTS="172.22.0.12/13" #{server IP}/{max number of parallel jobs}
+export DISTCC_POTENTIAL_HOSTS="172.22.0.12" 
 
-export CC=x86_64-linux-gnu-gcc-11 #explicitly mention gcc version to avoid failures 
+## ccache
+#  explicitly set path in order ccache -->> distcc -->> gcc
+export PATH="/usr/lib/ccache:/usr/lib/distcc:$PATH"
+
+#explicitly mention gcc g++ version to avoid failures
+export CC=x86_64-linux-gnu-gcc-11  
 export CXX=x86_64-linux-gnu-g++-11
+export cc="x86_64-linux-gnu-gcc-11"
 
 # for cross-compilation (from different riscv boards for example)
 #export CC="riscv64-linux-gnu-gcc-13"
 #export CXX="riscv64-linux-gnu-g++-13"
+#export cc="riscv64-linux-gnu-gcc-13"
 
 
 # Parallel jobs
-export MAKEFLAGS="-j$(($(nproc) * 2))"
+export ROS_PARALLEL_JOBS="-j$(distcc -j) -l$(distcc -j)" # doesnt work with ros2 (colcon build). use `colcon build --parallel-workers $(distcc -j)`
+export MAKEFLAGS="-j$(distcc -j)"
 ```
 
 ### Compiler Verification
