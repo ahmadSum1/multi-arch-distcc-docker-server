@@ -1,7 +1,13 @@
 #!/bin/bash
 
 # Define variables
-USERNAME=$(whoami)
+# Get the actual username
+if [[ -n "$SUDO_USER" ]]; then
+    USERNAME="$SUDO_USER"
+else
+    USERNAME=$(whoami)
+fi
+
 IMAGE_NAME="${USERNAME}-distcc-server"
 SERVICE_NAME="${USERNAME}-distccd"
 

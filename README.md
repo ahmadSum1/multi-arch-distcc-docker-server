@@ -1,6 +1,8 @@
-# Multi-arch `distcc` Docker Server Setup
+# Multi-Architecture Distcc Docker Server
 
-A Dockerized `distcc` server to distribute C/C++ compilation across a network. It can support multiple architectures, essentially cross-compiling. Designed for use in a VPN environment.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+A Dockerized DistCC server supporting cross-compilation for multiple architectures (ARM64, RISC-V).
 
 ## Features
 
@@ -22,6 +24,69 @@ A Dockerized `distcc` server to distribute C/C++ compilation across a network. I
 | `riscv64`         | `11`  | ✅       |
 | `riscv64`         | `12`  | 🤷‍♂️       |
 | `riscv64`         | `13`  | ✅       |
+
+
+## New Feature: One-Line Setup Script
+
+We now include an automated setup script for easy deployment!
+
+### Prerequisites
+
+1. **Proper Docker Installation** (required for systemd integration):
+   ```bash
+   # Remove any existing Docker installations from snap
+   # Verify installation
+   sudo systemctl enable --now docker
+   ```
+
+### Quick Start
+
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/ahmadSum1/multi-arch-distcc-docker-server.git
+   cd multi-arch-distcc-docker-server
+   ```
+
+2. **Run the setup script**:
+   ```bash
+   sudo ./setup_distcc_server.sh
+   ```
+
+This will:
+- Build the Docker image with cross-compilation tools
+- Create a systemd service for automatic management
+- Start the DistCC server on port 3632
+
+### Verify Installation
+
+1. Check service status:
+   ```bash
+   sudo systemctl status $(whoami)-distccd --no-pager
+   ```
+
+2. Verify Docker container:
+   ```bash
+   docker ps --filter "name=$(whoami)-distccd"
+   ```
+
+### Troubleshooting
+
+**Error: "Unit docker.service not found"**
+- Ensure Docker is installed using the official repository (not Snap)
+- Verify with `sudo systemctl status docker`
+
+**Permission Denied Errors**
+- The setup script must be run with sudo:
+  ```bash
+  sudo chmod +x setup_distcc_server.sh
+  sudo ./setup_distcc_server.sh
+  ```
+
+**Port Conflicts** 
+- The server uses port 3632 by default. Ensure this port is available.
+
+## Manual Configuration (Alternative)
+[Keep existing manual configuration instructions here...]
 
 ## Prerequisites
 
