@@ -39,7 +39,7 @@ We now include an automated setup script for easy deployment!
    sudo systemctl enable --now docker
    ```
 
-### Quick Start
+### [Lazy] Quick Start
 
 1. **Clone the repository**:
    ```bash
@@ -85,16 +85,16 @@ This will:
 **Port Conflicts** 
 - The server uses port 3632 by default. Ensure this port is available.
 
-## Manual Configuration (Alternative)
-[Keep existing manual configuration instructions here...]
+---
 
-## Prerequisites
+
+## [Alternative]Manual Setup
+
+### Prerequisites
 
 - Docker installed
 - Identical compiler versions on server and clients
 - Network access to port `3632`
-
-## Quick Start
 
 ### 1. Build Docker Image
 ```bash
